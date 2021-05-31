@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medical_record/components/CardInfo.dart';
 import 'package:medical_record/components/CardName.dart';
+import 'package:medical_record/pages/Profile.dart';
 import 'package:medical_record/pages/medicalDetails.dart';
 
 class MyApp extends StatelessWidget {
@@ -38,9 +39,14 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CardName(
-              name: 'Aldo Reghan Ramadhan',
-              np: 191080200193.toString(),
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+              },
+              child: CardName(
+                name: 'Aldo Reghan Ramadhan',
+                np: 191080200193.toString(),
+              ),
             ),
             Container(
               height: MediaQuery.of(context).size.height / 1.4,

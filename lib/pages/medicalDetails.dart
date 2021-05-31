@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:medical_record/components/CardDetail.dart';
+import 'package:medical_record/components/CardKeluhanDiagnosa.dart';
 import 'package:medical_record/pages/medicineReceipt.dart';
 
 class MyApp extends StatelessWidget {
@@ -29,192 +31,64 @@ class _MedicalDetailsState extends State<MedicalDetails> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            height: 600,
+            height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            // color: Colors.red,
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('CT-Scan',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18)),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.person,
-                        size: 30,
-                        color: Colors.blue,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Dr. Aldo Reghan Ramadhan',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.blue),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.calendar_today,
-                        size: 30,
-                        color: Colors.grey,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        '20 Januari 2020',
-                        style: TextStyle(
-                            color: Colors.grey, fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_on,
-                        size: 30,
-                        color: Colors.grey,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Faskes 1, Sidoarjo',
-                        style: TextStyle(
-                            color: Colors.grey, fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
+                  CardDetail(),
                   SizedBox(
                     height: 20,
                   ),
-                  Text('Data Pasien',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18)),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.height,
-                        size: 30,
-                        color: Colors.blue,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        '178 cm',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.blue),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.person,
-                        size: 30,
-                        color: Colors.grey,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        '60 kg',
-                        style: TextStyle(
-                            color: Colors.grey, fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.favorite,
-                        size: 30,
-                        color: Colors.red,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        '120/80',
-                        style: TextStyle(
-                            color: Colors.red, fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
+                  CardDetail(),
                   SizedBox(
                     height: 20,
                   ),
-                  Text('Keluhan',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18)),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley",
+                  CardKeluhanDiagnosa(
+                    title: 'Keluhan',
+                    deskripsi:
+                        "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley",
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   SizedBox(
-                    height: 20,
-                  ),
-                  Text('Diagnosa',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18)),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                      "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley"),
-                  SizedBox(
                     height: 10,
                   ),
+                  CardKeluhanDiagnosa(
+                    title: 'Diagnosa',
+                    deskripsi:
+                        "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley",
+                  ),
+                  SizedBox(height: 20),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MedicineReceipt()));
-                    },
-                    child: Text(
-                      'Lihat Resep Obat',
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  )
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MedicineReceipt()));
+                      },
+                      child: Container(
+                        height: 40,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadiusDirectional.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 7,
+                                  color: Colors.grey.withOpacity(0.5),
+                                  offset: Offset(0, 6))
+                            ]),
+                        child: Center(
+                          child: Text(
+                            'Lihat Resep Obat',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ))
                 ],
               ),
             ),
