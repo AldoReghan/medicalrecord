@@ -44,7 +44,7 @@ class _CardDetailState extends State<CardDetail> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('CT-Scan',
+            Text(widget.title == null ? '' : widget.title,
                 style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -63,7 +63,7 @@ class _CardDetailState extends State<CardDetail> {
                   width: 10,
                 ),
                 Text(
-                  'Dr. Aldo Reghan Ramadhan',
+                  widget.dokterOrTb == null ? '' : widget.dokterOrTb,
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.blue),
                 )
@@ -83,7 +83,7 @@ class _CardDetailState extends State<CardDetail> {
                   width: 10,
                 ),
                 Text(
-                  '20 Januari 2020',
+                  widget.dateOrWeight == null ? '' : widget.dateOrWeight,
                   style: TextStyle(
                       color: Colors.grey, fontWeight: FontWeight.bold),
                 )
@@ -103,7 +103,7 @@ class _CardDetailState extends State<CardDetail> {
                   width: 10,
                 ),
                 Text(
-                  'Faskes 1, Sidoarjo',
+                  widget.placeOrHeartbeath == null ? '' : widget.placeOrHeartbeath,
                   style: TextStyle(
                       color: Colors.grey, fontWeight: FontWeight.bold),
                 )

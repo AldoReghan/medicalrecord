@@ -26,6 +26,7 @@ class _CardKeluhanDiagnosaState extends State<CardKeluhanDiagnosa> {
   Widget build(BuildContext context) {
     return Container(
       height: 120,
+      width: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadiusDirectional.circular(10),

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CardMedicine extends StatelessWidget {
+  final String namaObat;
+  final int jumlah;
+  final String keterangan;
+
+  const CardMedicine({Key key, this.namaObat, this.jumlah, this.keterangan}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,18 +26,18 @@ class CardMedicine extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(top:16.0, left: 16.0),
-              child: Text('Paracetamol', style: TextStyle(
+              child: Text(namaObat, style: TextStyle(
                     color: Colors.blue,
                     fontWeight: FontWeight.bold,
                     fontSize: 18)),
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text('2 strip'),
+              child: Text(jumlah.toString()),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16.0, bottom: 16),
-              child: Text('Diminum 2 tablet sebelum dan sesudah makan'),
+              child: Text(keterangan),
             ),
           ],
         ),

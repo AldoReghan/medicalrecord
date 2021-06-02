@@ -58,14 +58,14 @@ class _CardInfoState extends State<CardInfo> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left:4.0),
-                      child: Text('Periksa',style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),),
+                      child: Text(widget.tujuan,style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),),
                     ),
                     SizedBox(height: 5,),
                     Row(
                       children: [
                         Icon(Icons.person, size: 30, color: Colors.blue,),
                         SizedBox(width: 10,),
-                        Text('Dr. Aldo Reghan Ramadhan', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),)
+                        Text(widget.namaDokter, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),)
                       ],
                     ),
                     SizedBox(height: 5,),
@@ -73,7 +73,7 @@ class _CardInfoState extends State<CardInfo> {
                       children: [
                         Icon(Icons.calendar_today, size: 30, color: Colors.grey,),
                         SizedBox(width: 10,),
-                        Text('20 Januari 2020',style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),)
+                        Text(widget.tanggalKedatangan,style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),)
                       ],
                     ),
                     SizedBox(height: 5,),
@@ -81,7 +81,7 @@ class _CardInfoState extends State<CardInfo> {
                       children: [
                         Icon(Icons.location_on, size: 30, color: Colors.grey,),
                         SizedBox(width: 10,),
-                        Text('Faskes 1, Sidoarjo',style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),)
+                        Text(widget.lokasi,style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),)
                       ],
                     )
                   ],

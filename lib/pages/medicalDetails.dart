@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medical_record/components/CardDetail.dart';
 import 'package:medical_record/components/CardKeluhanDiagnosa.dart';
+import 'package:medical_record/models/rekamMedis.dart';
 import 'package:medical_record/pages/medicineReceipt.dart';
 
 class MyApp extends StatelessWidget {
@@ -14,6 +15,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MedicalDetails extends StatefulWidget {
+  final RekamMedis item;
+
+  const MedicalDetails({Key key, this.item}) : super(key: key);
   @override
   _MedicalDetailsState createState() => _MedicalDetailsState();
 }
@@ -38,18 +42,28 @@ class _MedicalDetailsState extends State<MedicalDetails> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CardDetail(),
+                  CardDetail(
+                    title: widget.item.tujuan,
+                    dokterOrTb: widget.item.namaDokter,
+                    dateOrWeight: widget.item.tglBerobat,
+                    placeOrHeartbeath: widget.item.lokasi,
+                  ),
                   SizedBox(
                     height: 20,
                   ),
-                  CardDetail(),
+                  CardDetail(
+                    title: 'Data Pasien',
+                    dokterOrTb: '178 cm',
+                    dateOrWeight: '86kg',
+                    placeOrHeartbeath: widget.item.tekananDarah,
+                  ),
                   SizedBox(
                     height: 20,
                   ),
                   CardKeluhanDiagnosa(
                     title: 'Keluhan',
                     deskripsi:
-                        "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley",
+                        widget.item.keluhan,
                   ),
                   SizedBox(
                     height: 10,
@@ -60,7 +74,7 @@ class _MedicalDetailsState extends State<MedicalDetails> {
                   CardKeluhanDiagnosa(
                     title: 'Diagnosa',
                     deskripsi:
-                        "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley",
+                        widget.item.diagnosa,
                   ),
                   SizedBox(height: 20),
                   GestureDetector(
@@ -70,22 +84,27 @@ class _MedicalDetailsState extends State<MedicalDetails> {
                             MaterialPageRoute(
                                 builder: (context) => MedicineReceipt()));
                       },
-                      child: Container(
-                        height: 40,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadiusDirectional.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                  blurRadius: 7,
-                                  color: Colors.grey.withOpacity(0.5),
-                                  offset: Offset(0, 6))
-                            ]),
-                        child: Center(
-                          child: Text(
-                            'Lihat Resep Obat',
-                            style: TextStyle(color: Colors.white),
+                      child: GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => MedicineReceipt(idrekammedis: widget.item.idrekammedis,)));
+                        },
+                        child: Container(
+                          height: 40,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadiusDirectional.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                    blurRadius: 7,
+                                    color: Colors.grey.withOpacity(0.5),
+                                    offset: Offset(0, 6))
+                              ]),
+                          child: Center(
+                            child: Text(
+                              'Lihat Resep Obat',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                       ))
