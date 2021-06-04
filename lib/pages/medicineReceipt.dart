@@ -32,12 +32,15 @@ class _MedicineReceiptState extends State<MedicineReceipt> {
     final response = await http
         .post(url, body: {"idrekammedis": widget.idrekammedis.toString()});
     final datas = jsonDecode(response.body)['data'];
+    // print(datas[0]);
     for (var data in datas) {
-      ResepObat resepobat = ResepObat(
-          namaObat: data['nama_obat'],
-          jumlahObat: data['jumlah'],
-          keterangan: data['keterangan']);
-      resepObat.add(resepobat);
+      if (data != null) {
+        ResepObat resepobat = ResepObat(
+            namaObat: data['nama_obat'],
+            jumlahObat: data['jumlah'],
+            keterangan: data['keterangan']);
+        resepObat.add(resepobat);
+      }
     }
     setState(() {
       return resepObat;
@@ -57,19 +60,21 @@ class _MedicineReceiptState extends State<MedicineReceipt> {
         title: Text('Resep Obat'),
         backgroundColor: Colors.blue[900],
       ),
-      body: Container(
-          color: Colors.white,
-          width: MediaQuery.of(context).size.width,
-          child: ListView.builder(
-              itemCount: resepObat.length,
-              itemBuilder: (context, index) {
-                final x = resepObat[index];
-                return CardMedicine(
-                  namaObat: x.namaObat,
-                  jumlah: x.jumlahObat,
-                  keterangan: x.keterangan,
-                );
-              })),
+      body: resepObat == null
+          ? Center(child: Text('Data not found'))
+          : Container(
+              color: Colors.white,
+              width: MediaQuery.of(context).size.width,
+              child: ListView.builder(
+                  itemCount: resepObat.length,
+                  itemBuilder: (context, index) {
+                    final x = resepObat[index];
+                    return CardMedicine(
+                      namaObat: x.namaObat,
+                      jumlah: x.jumlahObat,
+                      keterangan: x.keterangan,
+                    );
+                  })),
     );
   }
 }

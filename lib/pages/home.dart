@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) => Login()), (route) => false);
       });
-    }else{
+    } else {
       getDataPasien();
     }
   }
@@ -104,66 +104,70 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: getDataPasien,
-      child: Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.blue[900]),
-          title:
-              Text('Medical Record', style: TextStyle(color: Colors.blue[900])),
-          elevation: 0.0,
-          backgroundColor: Colors.white,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.logout),
-              onPressed: () {
-                logout();
-              },
-            )
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Profile()));
+    if (rekamMedis == null) {
+      return CircularProgressIndicator();
+    } else {
+      return RefreshIndicator(
+        onRefresh: getDataPasien,
+        child: Scaffold(
+          appBar: AppBar(
+            iconTheme: IconThemeData(color: Colors.blue[900]),
+            title: Text('Medical Record',
+                style: TextStyle(color: Colors.blue[900])),
+            elevation: 0.0,
+            backgroundColor: Colors.white,
+            actions: [
+              IconButton(
+                icon: Icon(Icons.logout),
+                onPressed: () {
+                  logout();
                 },
-                child: CardName(
-                  name: namaPasien == null ? "" : namaPasien,
-                  np: nip == null ? "" : nip.toString(),
-                ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height / 1.4,
-                child: ListView.builder(
-                  itemCount: rekamMedis.length,
-                  itemBuilder: (context, i) {
-                    final data = rekamMedis[i];
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MedicalDetails(
-                                      item: data,
-                                    )));
-                      },
-                      child: CardInfo(
-                        tujuan: data.tujuan,
-                        namaDokter: data.namaDokter,
-                        tanggalKedatangan: data.tglBerobat,
-                        lokasi: data.lokasi,
-                      ),
-                    );
-                  },
-                ),
               )
             ],
           ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Profile()));
+                  },
+                  child: CardName(
+                    name: namaPasien == null ? "" : namaPasien,
+                    np: nip == null ? "" : nip.toString(),
+                  ),
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height / 1.4,
+                  child: ListView.builder(
+                    itemCount: rekamMedis.length,
+                    itemBuilder: (context, i) {
+                      final data = rekamMedis[i];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MedicalDetails(
+                                        item: data,
+                                      )));
+                        },
+                        child: CardInfo(
+                          tujuan: data.tujuan,
+                          namaDokter: data.namaDokter,
+                          tanggalKedatangan: data.tglBerobat,
+                          lokasi: data.lokasi,
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
