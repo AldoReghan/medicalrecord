@@ -26,23 +26,16 @@ class MedicineReceipt extends StatefulWidget {
 class _MedicineReceiptState extends State<MedicineReceipt> {
   List<ResepObat> resepObat = [];
 
-  getMedicineReceipt() async {
+  Future getMedicineReceipt() async {
     resepObat.clear();
     final url = Uri.parse("http://192.168.43.2:3000/resepobat");
     final response = await http
         .post(url, body: {"idrekammedis": widget.idrekammedis.toString()});
     final datas = jsonDecode(response.body)['data'];
-    // print(datas[0]);
     for (var data in datas) {
-      if (data != null) {
-        ResepObat resepobat = ResepObat(
-            namaObat: data['nama_obat'],
-            jumlahObat: data['jumlah'],
-            keterangan: data['keterangan']);
-        resepObat.add(resepobat);
-      }
-    }
-    setState(() {
+      ResepObat resep = new ResepObat.fromJson(data);
+      resepObat.add(resep);
+    }setState(() {
       return resepObat;
     });
   }
@@ -74,7 +67,8 @@ class _MedicineReceiptState extends State<MedicineReceipt> {
                       jumlah: x.jumlahObat,
                       keterangan: x.keterangan,
                     );
-                  })),
+                  })
+                  ),
     );
   }
 }

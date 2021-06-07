@@ -67,18 +67,7 @@ class _HomePageState extends State<HomePage> {
     if (status == 200) {
       final datas = jsonDecode(response.body)['data'];
       for (var data in datas) {
-        RekamMedis rekammedis = RekamMedis(
-            idrekammedis: data['idrekammedis'],
-            nip: data['nip'],
-            nid: data['nid'],
-            idfaskes: data['idfaskes'],
-            namaDokter: data['nama_dokter'],
-            tujuan: data['tujuan'],
-            keluhan: data['keluhan'],
-            diagnosa: data['diagnosa'],
-            lokasi: data['nama_faskes'],
-            tekananDarah: data['tekanan_darah'],
-            tglBerobat: data['tgl_berobat']);
+        RekamMedis rekammedis = RekamMedis.fromJson(data);
         rekamMedis.add(rekammedis);
       }
       setState(() {
