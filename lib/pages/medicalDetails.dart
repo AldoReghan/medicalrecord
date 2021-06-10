@@ -35,7 +35,7 @@ class _MedicalDetailsState extends State<MedicalDetails> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height + kToolbarHeight * 2,
             width: MediaQuery.of(context).size.width,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -66,15 +66,20 @@ class _MedicalDetailsState extends State<MedicalDetails> {
                         widget.item.keluhan,
                   ),
                   SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
                   CardKeluhanDiagnosa(
                     title: 'Diagnosa',
                     deskripsi:
                         widget.item.diagnosa,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  CardKeluhanDiagnosa(
+                    title: 'Catatan Dokter',
+                    deskripsi:
+                        widget.item.catatan,
                   ),
                   SizedBox(height: 20),
                   GestureDetector(

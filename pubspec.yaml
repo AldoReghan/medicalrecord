@@ -33,6 +33,7 @@ dependencies:
   shared_preferences: ^2.0.6
   flutter_background_service: ^0.1.5
   provider: ^5.0.0
+  double_back_to_close_app: ^2.0.1
 
 dev_dependencies:
   flutter_test:

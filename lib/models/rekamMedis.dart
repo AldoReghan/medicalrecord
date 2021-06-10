@@ -9,6 +9,7 @@ class RekamMedis {
   final String lokasi;
   final String keluhan;
   final String diagnosa;
+  final String catatan;
   final String tekananDarah;
 
   RekamMedis(
@@ -22,7 +23,8 @@ class RekamMedis {
       this.tujuan,
       this.lokasi,
       this.keluhan,
-      this.diagnosa});
+      this.diagnosa,
+      this.catatan});
 
   factory RekamMedis.fromJson(Map<String, dynamic> data) {
     return RekamMedis(
@@ -34,6 +36,7 @@ class RekamMedis {
         tujuan: data['tujuan'],
         keluhan: data['keluhan'],
         diagnosa: data['diagnosa'],
+        catatan: data['catatan'],
         lokasi: data['nama_faskes'],
         tekananDarah: data['tekanan_darah'],
         tglBerobat: data['tgl_berobat']);

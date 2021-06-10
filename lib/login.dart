@@ -74,7 +74,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(color: Colors.black),
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'NIP',
+                      hintText: 'Username',
                       hintStyle: TextStyle(color: Colors.grey),
                       prefixIcon: Icon(
                         Icons.person,

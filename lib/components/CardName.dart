@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class CardName extends StatelessWidget {
   final photo;
   final String name;
-  final String np;
+  final String nip;
 
-  const CardName({Key key, this.photo, this.name, this.np}) : super(key: key);
+  const CardName({Key key, this.photo, this.name, this.nip}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class CardName extends StatelessWidget {
                           SizedBox(
                             height: 5,
                           ),
-                          Text(np,
+                          Text(nip.toString(),
                               style: TextStyle(
                                 color: Colors.white,
                               ))

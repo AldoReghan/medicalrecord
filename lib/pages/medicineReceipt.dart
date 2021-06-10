@@ -1,9 +1,10 @@
-import 'dart:convert';
+// import 'dart:convert';
+// import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:medical_record/components/CardMedicine.dart';
-import 'package:medical_record/models/resepObat.dart';
+import 'package:medical_record/providers/resepProvider.dart';
+import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -24,26 +25,9 @@ class MedicineReceipt extends StatefulWidget {
 }
 
 class _MedicineReceiptState extends State<MedicineReceipt> {
-  List<ResepObat> resepObat = [];
-
-  Future getMedicineReceipt() async {
-    resepObat.clear();
-    final url = Uri.parse("http://192.168.43.2:3000/resepobat");
-    final response = await http
-        .post(url, body: {"idrekammedis": widget.idrekammedis.toString()});
-    final datas = jsonDecode(response.body)['data'];
-    for (var data in datas) {
-      ResepObat resep = new ResepObat.fromJson(data);
-      resepObat.add(resep);
-    }setState(() {
-      return resepObat;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getMedicineReceipt();
+  Future<void> _resfresh() async {
+    await Provider.of<ResepProvider>(context, listen: false)
+        .getResep(context, widget.idrekammedis);
   }
 
   @override
@@ -53,22 +37,37 @@ class _MedicineReceiptState extends State<MedicineReceipt> {
         title: Text('Resep Obat'),
         backgroundColor: Colors.blue[900],
       ),
-      body: resepObat == null
-          ? Center(child: Text('Data not found'))
-          : Container(
-              color: Colors.white,
-              width: MediaQuery.of(context).size.width,
-              child: ListView.builder(
-                  itemCount: resepObat.length,
-                  itemBuilder: (context, index) {
-                    final x = resepObat[index];
-                    return CardMedicine(
-                      namaObat: x.namaObat,
-                      jumlah: x.jumlahObat,
-                      keterangan: x.keterangan,
-                    );
-                  })
-                  ),
+      body: RefreshIndicator(
+        onRefresh: _resfresh,
+        child: FutureBuilder(
+          future: Provider.of<ResepProvider>(context, listen: false)
+              .getResep(context, widget.idrekammedis),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Consumer<ResepProvider>(builder: (context, data, _) {
+              if (data.resepObat.length < 0) {
+                return Center(
+                  child: Text('Resep obat tidak ada'),
+                );
+              } else {
+                return ListView.builder(
+                    itemCount: data.resepObat.length,
+                    itemBuilder: (context, i) {
+                      final x = data.resepObat[i];
+                      return CardMedicine(
+                          namaObat: x.namaObat,
+                          jumlah: x.jumlahObat,
+                          keterangan: x.keterangan);
+                    });
+              }
+            });
+          },
+        ),
+      ),
     );
   }
 }
