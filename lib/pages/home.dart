@@ -65,8 +65,6 @@ class _HomePageState extends State<HomePage> {
     final PasienProvider pasienProvider = Provider.of<PasienProvider>(context);
     pasienProvider.getDataPasien(context, iduser);
 
-    // print(pasienProvider.listpasien[0].namaPasien);
-
     final RekamMedisProvider rekamMedisProvider =
         Provider.of<RekamMedisProvider>(context);
     rekamMedisProvider.getRekamMedis(context, 1);
