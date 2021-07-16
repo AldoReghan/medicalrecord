@@ -25,49 +25,29 @@ class MedicineReceipt extends StatefulWidget {
 }
 
 class _MedicineReceiptState extends State<MedicineReceipt> {
-  Future<void> _resfresh() async {
-    await Provider.of<ResepProvider>(context, listen: false)
-        .getResep(context, widget.idrekammedis);
-  }
-
   @override
   Widget build(BuildContext context) {
+    final ResepProvider resepProvider = Provider.of<ResepProvider>(context);
+    resepProvider.getResep(context, widget.idrekammedis);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Resep Obat'),
-        backgroundColor: Colors.blue[900],
-      ),
-      body: RefreshIndicator(
-        onRefresh: _resfresh,
-        child: FutureBuilder(
-          future: Provider.of<ResepProvider>(context, listen: false)
-              .getResep(context, widget.idrekammedis),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return Consumer<ResepProvider>(builder: (context, data, _) {
-              if (data.resepObat.length < 0) {
-                return Center(
-                  child: Text('Resep obat tidak ada'),
-                );
-              } else {
-                return ListView.builder(
-                    itemCount: data.resepObat.length,
-                    itemBuilder: (context, i) {
-                      final x = data.resepObat[i];
-                      return CardMedicine(
-                          namaObat: x.namaObat,
-                          jumlah: x.jumlahObat,
-                          keterangan: x.keterangan);
-                    });
-              }
-            });
-          },
+        appBar: AppBar(
+          title: Text('Resep Obat'),
+          backgroundColor: Colors.blue[900],
         ),
-      ),
-    );
+        body: resepProvider.listResepObat == null
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.builder(
+                itemCount: resepProvider.listResepObat.length,
+                itemBuilder: (context, i) {
+                  final x = resepProvider.listResepObat[i];
+                  return CardMedicine(
+                    namaObat: x.namaObat,
+                    jumlah: x.jumlahObat,
+                    keterangan: x.keterangan,
+                  );
+                }));
   }
 }

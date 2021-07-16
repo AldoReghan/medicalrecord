@@ -33,7 +33,7 @@ class CardMedicine extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text(jumlah.toString()),
+              child: Text(jumlah.toString()+" Pcs"),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16.0, bottom: 16),

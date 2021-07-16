@@ -21,6 +21,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -93,6 +94,7 @@ class _LoginState extends State<Login> {
                       border: Border.all(color: Colors.blue)),
                   child: TextFormField(
                     controller: passwordController,
+                    obscureText: true,
                     style: TextStyle(color: Colors.black),
                     decoration: InputDecoration(
                       border: InputBorder.none,

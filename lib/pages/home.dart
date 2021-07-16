@@ -7,7 +7,7 @@ import 'package:medical_record/providers/pasienProvider.dart';
 import 'package:medical_record/providers/rekamMedisProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:double_back_to_close_app/double_back_to_close_app.dart';
+// import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -26,26 +26,24 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int iduser;
+  bool isLogin;
+  SharedPreferences sharedPreferences;
 
   check() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    final int idusers = sharedPreferences.getInt('iduser');
-    if (idusers == null) {
+    sharedPreferences = await SharedPreferences.getInstance();
+    iduser = sharedPreferences.getInt('iduser');
+    if (iduser == null) {
+      print("iduser nya null");
       setState(() {
+        isLogin = false;
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) => Login()), (route) => false);
       });
     } else {
-      Provider.of<PasienProvider>(context, listen: false)
-          .getDataPasien(context, idusers);
       setState(() {
-        iduser = idusers;
+        isLogin = true;
       });
     }
-  }
-
-  Future<void> _refresh() async {
-    await check();
   }
 
   logout() async {
@@ -64,6 +62,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final PasienProvider pasienProvider = Provider.of<PasienProvider>(context);
+    pasienProvider.getDataPasien(context, iduser);
+
+    // print(pasienProvider.listpasien[0].namaPasien);
+
+    final RekamMedisProvider rekamMedisProvider =
+        Provider.of<RekamMedisProvider>(context);
+    rekamMedisProvider.getRekamMedis(context, 1);
+
     return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.blue[900]),
@@ -80,82 +87,40 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
-        body: DoubleBackToCloseApp(
-          snackBar: SnackBar(content: Text("Double Click To Exit")),
-          child: RefreshIndicator(
-            onRefresh: _refresh,
-            child: SingleChildScrollView(
-              child: FutureBuilder(
-                  future: Provider.of<PasienProvider>(context, listen: false)
-                      .getDataPasien(context, iduser),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return Consumer<PasienProvider>(
-                        builder: (context, data, _) {
-                      final x = data.pasien[0];
-                      return Column(
-                        children: [
-                          CardName(
-                            name: x.namaPasien,
-                            nip: x.nip.toString(),
-                          ),
-                          Container(
-                            height: MediaQuery.of(context).size.height / 1.4,
-                            child: FutureBuilder(
-                                future: Provider.of<RekamMedisProvider>(context,
-                                        listen: false)
-                                    .getRekamMedis(context, x.nip),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  }
-                                  return Consumer<RekamMedisProvider>(
-                                      builder: (context, data, _) {
-                                    return ListView.builder(
-                                        itemCount: data.rekamMedis.length,
-                                        itemBuilder: (context, i) {
-                                          final file = data.rekamMedis[i];
-                                          if (file == null) {
-                                            return Center(
-                                              child: Text('Rekam Medis kosong'),
-                                            );
-                                          } else {
-                                            return GestureDetector(
-                                              onTap: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            MedicalDetails(
-                                                              item: file,
-                                                            )));
-                                              },
-                                              child: CardInfo(
-                                                tujuan: file.tujuan,
-                                                namaDokter: file.namaDokter,
-                                                tanggalKedatangan:
-                                                    file.tglBerobat,
-                                                lokasi: file.lokasi,
-                                              ),
-                                            );
-                                          }
-                                        });
-                                  });
-                                }),
-                          )
-                        ],
-                      );
-                    });
-                  }),
-            ),
-          ),
-        ));
+        body: pasienProvider.listpasien != null &&
+                rekamMedisProvider.listrekammedis != null
+            ? Column(
+                children: [
+                  CardName(
+                    name: '${pasienProvider.listpasien[0].namaPasien}',
+                    nip: '${pasienProvider.listpasien[0].nip}',
+                  ),
+                  Container(
+                    height: 500,
+                    child: ListView.builder(
+                        itemCount: rekamMedisProvider.listrekammedis.length,
+                        itemBuilder: (context, i) {
+                          final x = rekamMedisProvider.listrekammedis[i];
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MedicalDetails(
+                                            item: x,
+                                          )));
+                            },
+                            child: CardInfo(
+                              tujuan: x.tujuan,
+                              namaDokter: x.namaDokter,
+                              tanggalKedatangan: x.tglBerobat,
+                              lokasi: x.lokasi,
+                            ),
+                          );
+                        }),
+                  )
+                ],
+              )
+            : Center(child: CircularProgressIndicator()));
   }
 }

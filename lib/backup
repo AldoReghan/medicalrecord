@@ -1,0 +1,40 @@
+Column(
+          children: [
+            // pasienProvider.listpasien == null
+            //     ? Center(
+            //         child: CircularProgressIndicator(),
+            //       )
+            //     : CardName(
+            //         name: '${pasienProvider.listpasien[0].namaPasien}',
+            //         nip: '${pasienProvider.listpasien[0].nip}',
+            //       ),
+            rekamMedisProvider.listrekammedis == null
+                ? Center(
+                    child: Center(child: CircularProgressIndicator()),
+                  )
+                : Container(
+                    height: 500,
+                    child: ListView.builder(
+                        itemCount: rekamMedisProvider.listrekammedis.length,
+                        itemBuilder: (context, i) {
+                          final x = rekamMedisProvider.listrekammedis[i];
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MedicalDetails(
+                                            item: x,
+                                          )));
+                            },
+                            child: CardInfo(
+                              tujuan: x.tujuan,
+                              namaDokter: x.namaDokter,
+                              tanggalKedatangan: x.tglBerobat,
+                              lokasi: x.lokasi,
+                            ),
+                          );
+                        }),
+                  )
+          ],
+        )
