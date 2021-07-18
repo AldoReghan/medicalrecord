@@ -11,16 +11,17 @@ class PasienProvider extends ChangeNotifier{
   int nip = 0;
   int get nipPasien => nip;
 
-  set nipPasien(int nomor){
-    nip = nomor;
-    notifyListeners();
-  }
-
   set listpasien(List<Pasien> item){
     pasien = item;
     nip = pasien[0].nip;
     notifyListeners();
   }
+
+  set nipPasien(int nomor){
+    nip = nomor;
+    notifyListeners();
+  }
+
 
   Future<List<Pasien>> getDataPasien(context, int iduser) async {
     final url = Uri.parse("http://192.168.43.2:3000/pasien");
