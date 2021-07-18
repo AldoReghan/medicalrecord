@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
 
     final RekamMedisProvider rekamMedisProvider =
         Provider.of<RekamMedisProvider>(context);
-    rekamMedisProvider.getRekamMedis(context, 1);
+    rekamMedisProvider.getRekamMedis(context, pasienProvider.nipPasien);
 
     return Scaffold(
         appBar: AppBar(

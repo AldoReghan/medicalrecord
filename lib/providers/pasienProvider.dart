@@ -5,11 +5,20 @@ import 'package:medical_record/models/pasien.dart';
 
 class PasienProvider extends ChangeNotifier{
 
-  List<Pasien> pasien;
+  List<Pasien> pasien = [];
   List<Pasien> get listpasien => pasien;
+
+  int nip = 0;
+  int get nipPasien => nip;
+
+  set nipPasien(int nomor){
+    nip = nomor;
+    notifyListeners();
+  }
 
   set listpasien(List<Pasien> item){
     pasien = item;
+    nip = pasien[0].nip;
     notifyListeners();
   }
 
