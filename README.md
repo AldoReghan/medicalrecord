@@ -1,6 +1,6 @@
 # medical_record
 
-A new Flutter project.
+Medical Record App with Flutter for journal project
 
 ## Getting Started
 
