@@ -7,8 +7,17 @@ class RekamMedisProvider extends ChangeNotifier {
   List<RekamMedis> rekamMedis;
   List<RekamMedis> get listrekammedis => rekamMedis;
 
+  int idrekammedis = 0;
+  int get idRekammedis => idrekammedis;
+
+  set idRekammedis(int id){
+    idrekammedis = id;
+    notifyListeners();
+  }
+
   set listrekammedis(List<RekamMedis> data) {
     rekamMedis = data;
+    idrekammedis = rekamMedis[0].idrekammedis;
     notifyListeners();
   }
 

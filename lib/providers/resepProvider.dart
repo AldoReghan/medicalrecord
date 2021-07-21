@@ -5,13 +5,20 @@ import 'package:medical_record/models/resepObat.dart';
 import 'package:http/http.dart' as http;
 
 class ResepProvider extends ChangeNotifier {
-  
   //set getter
   List<ResepObat> resepObat;
   List<ResepObat> get listResepObat => resepObat;
 
+  bool stats;
+  bool get status => stats;
+
+  set status(bool pesan){
+    stats = pesan;
+    notifyListeners();
+  } 
+
   //set setter
-  set listResepObat(List<ResepObat> data){
+  set listResepObat(List<ResepObat> data) {
     resepObat = data;
     notifyListeners();
   }
@@ -23,14 +30,19 @@ class ResepProvider extends ChangeNotifier {
         await http.post(url, body: {"idrekammedis": idrekammedis.toString()});
 
     final res = jsonDecode(response.body)['data'];
+    bool error = jsonDecode(response.body)['error'];
+
     List<ResepObat> data = [];
 
-    data.clear();
-    for (var i = 0; i < res.length; i++) {
-      var resep = new ResepObat.fromJson(res[i]);
-      data.add(resep);
+    if (error == false) {
+      for (var i = 0; i < res.length; i++) {
+        var resep = new ResepObat.fromJson(res[i]);
+        data.add(resep);
+      }
     }
+
     listResepObat = data;
+    stats = error;
     return listResepObat;
   }
 }

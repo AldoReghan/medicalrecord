@@ -87,37 +87,42 @@ class _HomePageState extends State<HomePage> {
         ),
         body: pasienProvider.listpasien != null &&
                 rekamMedisProvider.listrekammedis != null
-            ? Column(
-                children: [
-                  CardName(
-                    name: '${pasienProvider.listpasien[0].namaPasien}',
-                    nip: '${pasienProvider.listpasien[0].nip}',
-                  ),
-                  Container(
-                    height: 500,
-                    child: ListView.builder(
-                        itemCount: rekamMedisProvider.listrekammedis.length,
-                        itemBuilder: (context, i) {
-                          final x = rekamMedisProvider.listrekammedis[i];
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MedicalDetails(
-                                            item: x,
-                                          )));
-                            },
-                            child: CardInfo(
-                              tujuan: x.tujuan,
-                              namaDokter: x.namaDokter,
-                              tanggalKedatangan: x.tglBerobat,
-                              lokasi: x.lokasi,
-                            ),
-                          );
-                        }),
-                  )
-                ],
+            ? SingleChildScrollView(
+                physics: ScrollPhysics(),
+                child: Column(
+                  children: [
+                    CardName(
+                      name: '${pasienProvider.listpasien[0].namaPasien}',
+                      nip: '${pasienProvider.listpasien[0].nip}',
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: rekamMedisProvider.listrekammedis.length,
+                          itemBuilder: (context, i) {
+                            final x = rekamMedisProvider.listrekammedis[i];
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MedicalDetails(
+                                              item: x,
+                                            )));
+                              },
+                              child: CardInfo(
+                                tujuan: x.tujuan,
+                                namaDokter: x.namaDokter,
+                                tanggalKedatangan: x.tglBerobat,
+                                lokasi: x.lokasi,
+                              ),
+                            );
+                          }),
+                    )
+                  ],
+                ),
               )
             : Center(child: CircularProgressIndicator()));
   }

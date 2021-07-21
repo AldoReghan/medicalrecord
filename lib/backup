@@ -38,3 +38,20 @@ Column(
                   )
           ],
         )
+
+
+
+        widget.idrekammedis == null
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.builder(
+                itemCount: resepProvider.listResepObat.length,
+                itemBuilder: (context, i) {
+                  final x = resepProvider.listResepObat[i];
+                  return CardMedicine(
+                    namaObat: x.namaObat,
+                    jumlah: x.jumlahObat,
+                    keterangan: x.keterangan,
+                  );
+                })

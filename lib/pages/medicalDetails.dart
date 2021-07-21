@@ -62,57 +62,52 @@ class _MedicalDetailsState extends State<MedicalDetails> {
                   ),
                   CardKeluhanDiagnosa(
                     title: 'Keluhan',
-                    deskripsi:
-                        widget.item.keluhan,
+                    deskripsi: widget.item.keluhan,
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   CardKeluhanDiagnosa(
                     title: 'Diagnosa',
-                    deskripsi:
-                        widget.item.diagnosa,
+                    deskripsi: widget.item.diagnosa,
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   CardKeluhanDiagnosa(
                     title: 'Catatan Dokter',
-                    deskripsi:
-                        widget.item.catatan,
+                    deskripsi: widget.item.catatan,
                   ),
                   SizedBox(height: 20),
                   GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MedicineReceipt()));
-                      },
-                      child: GestureDetector(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => MedicineReceipt(idrekammedis: widget.item.idrekammedis,)));
-                        },
-                        child: Container(
-                          height: 40,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadiusDirectional.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                    blurRadius: 7,
-                                    color: Colors.grey.withOpacity(0.5),
-                                    offset: Offset(0, 6))
-                              ]),
-                          child: Center(
-                            child: Text(
-                              'Lihat Resep Obat',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MedicineReceipt(
+                                    idrekammedis: widget.item.idrekammedis,
+                                  )));
+                    },
+                    child: Container(
+                      height: 40,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadiusDirectional.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                blurRadius: 7,
+                                color: Colors.grey.withOpacity(0.5),
+                                offset: Offset(0, 6))
+                          ]),
+                      child: Center(
+                        child: Text(
+                          'Lihat Resep Obat',
+                          style: TextStyle(color: Colors.white),
                         ),
-                      ))
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

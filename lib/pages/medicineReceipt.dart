@@ -1,10 +1,12 @@
-// import 'dart:convert';
+import 'dart:convert';
 // import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:medical_record/components/CardMedicine.dart';
+import 'package:medical_record/models/resepObat.dart';
 import 'package:medical_record/providers/resepProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class MyApp extends StatelessWidget {
   @override
@@ -25,6 +27,25 @@ class MedicineReceipt extends StatefulWidget {
 }
 
 class _MedicineReceiptState extends State<MedicineReceipt> {
+  List<ResepObat> data = [];
+
+  getDataObat() async {
+    data.clear();
+    final url = Uri.parse("http://192.168.43.2:3000/resepobat");
+    final response = await http
+        .post(url, body: {"idrekammedis": widget.idrekammedis.toString()});
+
+    final res = jsonDecode(response.body)['data'];
+
+    for (var item in res) {
+      var resep = new ResepObat.fromJson(item);
+      print(resep.namaObat);
+      setState(() {
+        data.add(resep);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final ResepProvider resepProvider = Provider.of<ResepProvider>(context);
@@ -35,9 +56,9 @@ class _MedicineReceiptState extends State<MedicineReceipt> {
           title: Text('Resep Obat'),
           backgroundColor: Colors.blue[900],
         ),
-        body: resepProvider.listResepObat == null
+        body: resepProvider.status == true
             ? Center(
-                child: CircularProgressIndicator(),
+                child: Text("Resep Obat Kosong"),
               )
             : ListView.builder(
                 itemCount: resepProvider.listResepObat.length,

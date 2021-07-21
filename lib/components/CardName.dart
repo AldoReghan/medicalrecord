@@ -67,6 +67,8 @@ class CardName extends StatelessWidget {
                               ))
                         ],
                       ),
+                      Spacer(),
+                      Icon(Icons.settings, size: 30, color: Colors.white)
                     ],
                   ),
                   )
